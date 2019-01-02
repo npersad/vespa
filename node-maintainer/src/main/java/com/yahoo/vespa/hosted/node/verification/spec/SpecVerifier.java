@@ -51,6 +51,9 @@ public class SpecVerifier extends Main.VerifierCommand {
     @Option(name = {"--skip-reverse-lookup"}, required = false, description = "Skip verification of IP addresses -> hostname")
     private boolean skipReverseLookup = false;
 
+    @Option(name = {"--IPv6"}, required = false, description = "Verify IPv6 connection")
+    private boolean checkIPv6 = false;
+
     @Override
     public void run(HardwareDivergenceReport hardwareDivergenceReport, CommandExecutor commandExecutor) {
         String[] ips = Optional.ofNullable(ipAddresses)
@@ -65,7 +68,7 @@ public class SpecVerifier extends Main.VerifierCommand {
     }
 
     private SpecVerificationReport verifySpec(NodeSpec nodeSpec, CommandExecutor commandExecutor) {
-        VerifierSettings verifierSettings = new VerifierSettings(false);
+        VerifierSettings verifierSettings = new VerifierSettings(checkIPv6);
         HardwareInfo actualHardware = HardwareInfoRetriever.retrieve(commandExecutor, verifierSettings);
         return makeVerificationReport(actualHardware, nodeSpec, skipLookup, skipReverseLookup);
     }
