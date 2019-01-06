@@ -62,7 +62,8 @@ Vagrant.configure("2") do |config|
         sudo \
         firefox \
         vim \
-        emacs
+        emacs \
+        cmake3
 
     sed -e '/^BuildRequires:/d' -e 's/^Requires:/BuildRequires:/' /vagrant/dist/vespa.spec > /tmp/vesparun.spec
     yum-builddep -y /vagrant/dist/vespa.spec /tmp/vesparun.spec
